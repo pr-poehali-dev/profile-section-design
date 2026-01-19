@@ -8,6 +8,7 @@ import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import Dashboard from "./pages/Dashboard";
 import Transactions from "./pages/Transactions";
+import Summary from "./pages/Summary";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Layout><Dashboard /></Layout>} />
           <Route path="/transactions" element={<Layout><Transactions /></Layout>} />
+          <Route path="/summary" element={<Layout><Summary /></Layout>} />
           <Route path="/categories" element={<Layout><Dashboard /></Layout>} />
           <Route path="/analytics" element={<Layout><Dashboard /></Layout>} />
           <Route path="*" element={<NotFound />} />

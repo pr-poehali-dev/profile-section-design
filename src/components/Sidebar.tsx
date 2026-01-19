@@ -8,6 +8,7 @@ export default function Sidebar() {
   const menuItems = [
     { path: '/', icon: 'LayoutDashboard', label: 'Дашборд' },
     { path: '/transactions', icon: 'ArrowLeftRight', label: 'Операции' },
+    { path: '/summary', icon: 'Table', label: 'Сводная' },
     { path: '/categories', icon: 'FolderOpen', label: 'Категории' },
     { path: '/analytics', icon: 'PieChart', label: 'Аналитика' },
   ];
