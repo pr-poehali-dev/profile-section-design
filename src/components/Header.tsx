@@ -19,6 +19,7 @@ const pageTitles: Record<string, string> = {
   '/categories': 'Справочник',
   '/analytics': 'Аналитика',
   '/profile': 'Профиль',
+  '/settings': 'Настройки',
   '/support': 'Поддержка',
   '/ui-kit': 'UI Kit'
 };
@@ -80,7 +81,7 @@ export default function Header() {
                 <Icon name="User" size={16} className="mr-2" />
                 Профиль
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate('/settings')}>
                 <Icon name="Settings" size={16} className="mr-2" />
                 Настройки
               </DropdownMenuItem>

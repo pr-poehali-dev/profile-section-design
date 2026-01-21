@@ -9,6 +9,10 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
 
 interface CategoryData {
@@ -119,32 +123,41 @@ export default function Summary() {
     return new Intl.NumberFormat('ru-RU').format(amount) + ' ₽';
   };
 
+  const [budgets, setBudgets] = useState<Record<string, number>>({});
+  const [editingBudget, setEditingBudget] = useState<string | null>(null);
+  const [budgetValue, setBudgetValue] = useState('');
+
+  const handleSaveBudget = (category: string) => {
+    const value = parseInt(budgetValue);
+    if (!isNaN(value) && value > 0) {
+      setBudgets(prev => ({ ...prev, [category]: value }));
+    }
+    setEditingBudget(null);
+    setBudgetValue('');
+  };
+
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-3xl font-bold text-foreground">Сводная</h2>
-          <p className="text-muted-foreground mt-1">
-            Финансовая отчётность за {currentYear} год
-          </p>
-        </div>
-        <div className="flex gap-2">
-          <Badge
-            variant={viewType === 'expense' ? 'default' : 'outline'}
-            className="cursor-pointer px-4 py-2 gap-2"
-            onClick={() => setViewType('expense')}
-          >
-            <Icon name="ArrowDownRight" size={14} />
-            Расходы
-          </Badge>
-          <Badge
-            variant={viewType === 'income' ? 'default' : 'outline'}
-            className="cursor-pointer px-4 py-2 gap-2"
-            onClick={() => setViewType('income')}
-          >
-            <Icon name="ArrowUpRight" size={14} />
-            Доходы
-          </Badge>
+      <div className="flex items-center justify-between flex-wrap gap-4">
+        <div className="flex items-center gap-4">
+          <div className="flex gap-2">
+            <Button
+              variant={viewType === 'expense' ? 'default' : 'outline'}
+              onClick={() => setViewType('expense')}
+              className="gap-2"
+            >
+              <Icon name="ArrowDownRight" size={16} />
+              Расходы
+            </Button>
+            <Button
+              variant={viewType === 'income' ? 'default' : 'outline'}
+              onClick={() => setViewType('income')}
+              className="gap-2"
+            >
+              <Icon name="ArrowUpRight" size={16} />
+              Доходы
+            </Button>
+          </div>
         </div>
       </div>
 

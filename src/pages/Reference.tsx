@@ -6,6 +6,7 @@ import Icon from '@/components/ui/icon';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 interface Category {
   id: number;
@@ -38,6 +39,8 @@ export default function Reference() {
 
   const [newCategory, setNewCategory] = useState({ name: '', type: 'expense' as 'expense' | 'income', icon: 'Tag', color: 'bg-gray-500' });
   const [newBank, setNewBank] = useState({ name: '', logo: '🏦' });
+  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+  const [editingBank, setEditingBank] = useState<Bank | null>(null);
 
   const handleAddCategory = () => {
     if (newCategory.name.trim()) {
@@ -59,6 +62,28 @@ export default function Reference() {
 
   const handleDeleteBank = (id: number) => {
     setBanks(banks.filter(b => b.id !== id));
+  };
+
+  const handleEditCategory = (category: Category) => {
+    setEditingCategory(category);
+  };
+
+  const handleSaveCategory = () => {
+    if (editingCategory) {
+      setCategories(categories.map(c => c.id === editingCategory.id ? editingCategory : c));
+      setEditingCategory(null);
+    }
+  };
+
+  const handleEditBank = (bank: Bank) => {
+    setEditingBank(bank);
+  };
+
+  const handleSaveBank = () => {
+    if (editingBank) {
+      setBanks(banks.map(b => b.id === editingBank.id ? editingBank : b));
+      setEditingBank(null);
+    }
   };
 
   const expenseCategories = categories.filter(c => c.type === 'expense');

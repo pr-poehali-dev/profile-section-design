@@ -9,10 +9,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
+import { useToast } from '@/hooks/use-toast';
+import { DatePicker } from '@/components/ui/datepicker';
 
 export default function UIKit() {
   const [switchChecked, setSwitchChecked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [emailError, setEmailError] = useState('');
+  const { toast } = useToast();
 
   return (
     <div className="min-h-screen bg-background p-8">
@@ -417,6 +422,144 @@ export default function UIKit() {
                 Gradient Text
               </p>
               <p className="text-sm text-muted-foreground mt-1">Градиентный текст для акцентов</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Уведомления (Toast)</CardTitle>
+            <CardDescription>Всплывающие сообщения об успехе и ошибках</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex flex-wrap gap-3">
+              <Button
+                onClick={() => {
+                  toast({
+                    title: "Успешно!",
+                    description: "Операция выполнена успешно",
+                  });
+                }}
+              >
+                Success Toast
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={() => {
+                  toast({
+                    variant: "destructive",
+                    title: "Ошибка!",
+                    description: "Произошла ошибка при выполнении операции",
+                  });
+                }}
+              >
+                Error Toast
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  toast({
+                    title: "Информация",
+                    description: "Это информационное сообщение",
+                  });
+                }}
+              >
+                Info Toast
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>DatePicker</CardTitle>
+            <CardDescription>Выбор даты в стиле приложения</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="max-w-md space-y-2">
+              <Label>Выберите дату</Label>
+              <DatePicker 
+                value={selectedDate} 
+                onChange={setSelectedDate}
+                placeholder="Выберите дату"
+              />
+              {selectedDate && (
+                <p className="text-sm text-muted-foreground">
+                  Выбрана: {selectedDate.toLocaleDateString('ru-RU')}
+                </p>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Input с ошибками</CardTitle>
+            <CardDescription>Валидация полей ввода</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="email-valid">Email (валидный)</Label>
+                <Input 
+                  id="email-valid"
+                  type="email" 
+                  placeholder="user@example.com"
+                  className="border-green-500 focus:ring-green-500"
+                />
+                <p className="text-sm text-green-600 flex items-center gap-1">
+                  <Icon name="Check" size={14} />
+                  Email введён корректно
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="email-error" className="text-destructive">Email (с ошибкой)</Label>
+                <Input 
+                  id="email-error"
+                  type="email" 
+                  placeholder="invalid-email"
+                  className="border-destructive focus:ring-destructive"
+                  onChange={(e) => {
+                    if (!e.target.value.includes('@')) {
+                      setEmailError('Введите корректный email');
+                    } else {
+                      setEmailError('');
+                    }
+                  }}
+                />
+                <p className="text-sm text-destructive flex items-center gap-1">
+                  <Icon name="AlertCircle" size={14} />
+                  {emailError || 'Неверный формат email'}
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="password-weak">Пароль (слабый)</Label>
+                <Input 
+                  id="password-weak"
+                  type="password" 
+                  defaultValue="123"
+                  className="border-orange-500 focus:ring-orange-500"
+                />
+                <p className="text-sm text-orange-600 flex items-center gap-1">
+                  <Icon name="AlertTriangle" size={14} />
+                  Слишком короткий пароль
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="text-required">Обязательное поле</Label>
+                <Input 
+                  id="text-required"
+                  placeholder="Не может быть пустым"
+                  className="border-destructive focus:ring-destructive"
+                />
+                <p className="text-sm text-destructive flex items-center gap-1">
+                  <Icon name="X" size={14} />
+                  Это поле обязательно для заполнения
+                </p>
+              </div>
             </div>
           </CardContent>
         </Card>

@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import Dashboard from "./pages/Dashboard";
@@ -11,6 +12,7 @@ import Transactions from "./pages/Transactions";
 import Summary from "./pages/Summary";
 import Reference from "./pages/Reference";
 import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
 import Support from "./pages/Support";
 import UIKit from "./pages/UIKit";
 import Login from "./pages/Login";
@@ -38,26 +40,29 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/" element={<Layout><Dashboard /></Layout>} />
-          <Route path="/transactions" element={<Layout><Transactions /></Layout>} />
-          <Route path="/summary" element={<Layout><Summary /></Layout>} />
-          <Route path="/categories" element={<Layout><Reference /></Layout>} />
-          <Route path="/analytics" element={<Layout><Dashboard /></Layout>} />
-          <Route path="/profile" element={<Layout><Profile /></Layout>} />
-          <Route path="/support" element={<Layout><Support /></Layout>} />
-          <Route path="/ui-kit" element={<UIKit />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <ThemeProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/" element={<Layout><Dashboard /></Layout>} />
+            <Route path="/transactions" element={<Layout><Transactions /></Layout>} />
+            <Route path="/summary" element={<Layout><Summary /></Layout>} />
+            <Route path="/categories" element={<Layout><Reference /></Layout>} />
+            <Route path="/analytics" element={<Layout><Dashboard /></Layout>} />
+            <Route path="/profile" element={<Layout><Profile /></Layout>} />
+            <Route path="/settings" element={<Layout><Settings /></Layout>} />
+            <Route path="/support" element={<Layout><Support /></Layout>} />
+            <Route path="/ui-kit" element={<UIKit />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
