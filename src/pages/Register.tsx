@@ -9,6 +9,7 @@ export default function Register() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     password: '',
     confirmPassword: ''
   });
@@ -80,6 +81,28 @@ export default function Register() {
                   placeholder="example@mail.com"
                   value={formData.email}
                   onChange={(e) => handleChange('email', e.target.value)}
+                  className="pl-10 h-12 bg-background/50 border-border/50 focus:border-primary"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="phone" className="text-foreground">
+                Номер телефона
+              </Label>
+              <div className="relative">
+                <Icon 
+                  name="Phone" 
+                  size={18} 
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                />
+                <Input
+                  id="phone"
+                  type="tel"
+                  placeholder="+7 (999) 123-45-67"
+                  value={formData.phone}
+                  onChange={(e) => handleChange('phone', e.target.value)}
                   className="pl-10 h-12 bg-background/50 border-border/50 focus:border-primary"
                   required
                 />

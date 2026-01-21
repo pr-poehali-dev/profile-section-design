@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -11,7 +12,19 @@ import {
 } from '@/components/ui/dropdown-menu';
 import Icon from '@/components/ui/icon';
 
+const pageTitles: Record<string, string> = {
+  '/': 'Дашборд',
+  '/transactions': 'Операции',
+  '/summary': 'Сводная',
+  '/categories': 'Категории',
+  '/analytics': 'Аналитика',
+  '/profile': 'Профиль',
+  '/support': 'Поддержка',
+  '/ui-kit': 'UI Kit'
+};
+
 export default function Header() {
+  const location = useLocation();
   const [user] = useState({
     name: 'Александр Иванов',
     email: 'alex.ivanov@email.com',
@@ -23,6 +36,8 @@ export default function Header() {
     return names.map(n => n[0]).join('');
   };
 
+  const pageTitle = pageTitles[location.pathname] || 'FinTrack';
+
   return (
     <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-lg border-b border-border/50">
       <div className="flex items-center justify-between px-8 py-4">
@@ -31,8 +46,7 @@ export default function Header() {
             <Icon name="Menu" size={20} />
           </Button>
           <div>
-            <h2 className="text-2xl font-bold text-foreground">Добро пожаловать! 👋</h2>
-            <p className="text-sm text-muted-foreground">Управляйте своими финансами</p>
+            <h2 className="text-2xl font-bold text-foreground">{pageTitle}</h2>
           </div>
         </div>
 

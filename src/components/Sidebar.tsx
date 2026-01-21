@@ -11,6 +11,9 @@ export default function Sidebar() {
     { path: '/summary', icon: 'Table', label: 'Сводная' },
     { path: '/categories', icon: 'FolderOpen', label: 'Категории' },
     { path: '/analytics', icon: 'PieChart', label: 'Аналитика' },
+    { path: '/profile', icon: 'User', label: 'Профиль' },
+    { path: '/support', icon: 'MessageCircle', label: 'Поддержка' },
+    { path: '/ui-kit', icon: 'Palette', label: 'UI Kit' },
   ];
 
   return (
@@ -50,11 +53,19 @@ export default function Sidebar() {
         })}
       </nav>
 
-      <div className="p-4 border-t border-border/50">
-        <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-muted/30">
-          <Icon name="HelpCircle" size={20} className="text-muted-foreground" />
-          <span className="text-sm text-muted-foreground">Помощь</span>
-        </div>
+      <div className="p-4 border-t border-border/50 space-y-2">
+        <Link
+          to="/support"
+          className={cn(
+            "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200",
+            location.pathname === '/support'
+              ? "bg-primary text-primary-foreground shadow-lg shadow-primary/30"
+              : "hover:bg-muted/50 text-muted-foreground hover:text-foreground"
+          )}
+        >
+          <Icon name="HelpCircle" size={20} />
+          <span className="text-sm font-medium">Помощь</span>
+        </Link>
       </div>
     </aside>
   );
