@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -16,7 +16,7 @@ const pageTitles: Record<string, string> = {
   '/': 'Дашборд',
   '/transactions': 'Операции',
   '/summary': 'Сводная',
-  '/categories': 'Категории',
+  '/categories': 'Справочник',
   '/analytics': 'Аналитика',
   '/profile': 'Профиль',
   '/support': 'Поддержка',
@@ -25,6 +25,7 @@ const pageTitles: Record<string, string> = {
 
 export default function Header() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [user] = useState({
     name: 'Александр Иванов',
     email: 'alex.ivanov@email.com',
@@ -75,7 +76,7 @@ export default function Header() {
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuLabel>Мой аккаунт</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate('/profile')}>
                 <Icon name="User" size={16} className="mr-2" />
                 Профиль
               </DropdownMenuItem>
@@ -84,7 +85,7 @@ export default function Header() {
                 Настройки
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-600">
+              <DropdownMenuItem className="text-red-600" onClick={() => navigate('/login')}>
                 <Icon name="LogOut" size={16} className="mr-2" />
                 Выйти
               </DropdownMenuItem>

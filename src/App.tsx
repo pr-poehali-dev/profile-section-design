@@ -1,4 +1,4 @@
-
+import React from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,6 +9,7 @@ import Header from "@/components/Header";
 import Dashboard from "./pages/Dashboard";
 import Transactions from "./pages/Transactions";
 import Summary from "./pages/Summary";
+import Reference from "./pages/Reference";
 import Profile from "./pages/Profile";
 import Support from "./pages/Support";
 import UIKit from "./pages/UIKit";
@@ -19,17 +20,21 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const Layout = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex min-h-screen bg-background">
-    <Sidebar />
-    <div className="flex-1 ml-64">
-      <Header />
-      <main className="p-8">
-        {children}
-      </main>
+const Layout = ({ children }: { children: React.ReactNode }) => {
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState(false);
+
+  return (
+    <div className="flex min-h-screen bg-background">
+      <Sidebar isCollapsed={isSidebarCollapsed} onToggle={setIsSidebarCollapsed} />
+      <div className={`flex-1 transition-all duration-300 ${isSidebarCollapsed ? 'ml-20' : 'ml-64'}`}>
+        <Header />
+        <main className="p-8">
+          {children}
+        </main>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -44,11 +49,11 @@ const App = () => (
           <Route path="/" element={<Layout><Dashboard /></Layout>} />
           <Route path="/transactions" element={<Layout><Transactions /></Layout>} />
           <Route path="/summary" element={<Layout><Summary /></Layout>} />
-          <Route path="/categories" element={<Layout><Dashboard /></Layout>} />
+          <Route path="/categories" element={<Layout><Reference /></Layout>} />
           <Route path="/analytics" element={<Layout><Dashboard /></Layout>} />
           <Route path="/profile" element={<Layout><Profile /></Layout>} />
           <Route path="/support" element={<Layout><Support /></Layout>} />
-          <Route path="/ui-kit" element={<Layout><UIKit /></Layout>} />
+          <Route path="/ui-kit" element={<UIKit />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
